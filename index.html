@@ -72,12 +72,11 @@
         @keyframes swing { 0%,100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
         .emoji-swing { display: inline-block; animation: swing 1.2s ease-in-out infinite; transform-origin: center; font-size: 15px; }
 
-        /* Scroll exclusivo no conteúdo - bloqueia scroll externo */
-        #agendaModal, #ferramentasModal, #settingsModal, #historyModal {
-            overflow: hidden;
-        }
+        /* Bloquear scroll da página principal quando modal está aberto */
+        body.modal-open { overflow: hidden !important; }
 
-        /* Container principal de scroll de cada modal */
+        /* Barra de rolagem padrão - igual à página principal */
+        .main-scroll,
         .ferr-scroll,
         .agenda-scroll,
         .config-scroll,
@@ -86,34 +85,32 @@
             -webkit-overflow-scrolling: touch !important;
             overscroll-behavior: contain !important;
             scrollbar-width: thin;
-            scrollbar-color: #94a3b8 #f1f5f9;
+            scrollbar-color: #cbd5e1 #f8fafc;
         }
 
-        /* Barra de rolagem visível (webkit) */
+        .main-scroll::-webkit-scrollbar,
         .ferr-scroll::-webkit-scrollbar,
         .agenda-scroll::-webkit-scrollbar,
         .config-scroll::-webkit-scrollbar,
         .history-scroll::-webkit-scrollbar { width: 5px; }
 
+        .main-scroll::-webkit-scrollbar-track,
         .ferr-scroll::-webkit-scrollbar-track,
         .agenda-scroll::-webkit-scrollbar-track,
         .config-scroll::-webkit-scrollbar-track,
-        .history-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .history-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
 
+        .main-scroll::-webkit-scrollbar-thumb,
         .ferr-scroll::-webkit-scrollbar-thumb,
         .agenda-scroll::-webkit-scrollbar-thumb,
         .config-scroll::-webkit-scrollbar-thumb,
-        .history-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        .history-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
+        .main-scroll::-webkit-scrollbar-thumb:hover,
         .ferr-scroll::-webkit-scrollbar-thumb:hover,
         .agenda-scroll::-webkit-scrollbar-thumb:hover,
         .config-scroll::-webkit-scrollbar-thumb:hover,
-        .history-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
-
-        /* Scroll interno das sub-abas de ferramentas */
-        #ferr-nbr, #ferr-carga, #ferr-queda, #ferr-check, #ferr-ia {
-            -webkit-overflow-scrolling: touch;
-        }
+        .history-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         /* Barra de rolagem visível (desktop) */
         #agendaContent::-webkit-scrollbar,
@@ -253,7 +250,7 @@
             </header>
 
             <!-- CONTEÚDO SCROLLÁVEL -->
-            <div class="relative -mt-6 bg-white rounded-t-[1.5rem] flex-grow shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] z-30 overflow-y-auto pb-20">
+            <div class="relative -mt-6 bg-white rounded-t-[1.5rem] flex-grow shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] z-30 main-scroll pb-20">
                 <div class="p-5 pt-6">
 
                     <!-- TELA 1: INPUTS -->
@@ -2112,9 +2109,11 @@
             if (m.classList.contains('hidden')) {
                 renderHistoricoUI();
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-x-full'), 10);
             } else {
                 c.classList.add('translate-x-full');
+                document.body.classList.remove('modal-open');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -2247,11 +2246,13 @@
             const c = document.getElementById('modalContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderListaServicosBase();
                 renderListaMateriaisBase();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-open');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -2617,11 +2618,13 @@
             const c = document.getElementById('ferramentasContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderModelosCheck();
                 renderTabelaNBR();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-open');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -3843,6 +3846,7 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
             const c = document.getElementById('agendaContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 const hoje = new Date();
                 document.getElementById('rel-mes').value = hoje.getMonth();
@@ -3852,6 +3856,7 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
                 renderGarantias();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-open');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
