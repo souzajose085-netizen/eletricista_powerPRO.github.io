@@ -71,6 +71,39 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes swing { 0%,100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
         .emoji-swing { display: inline-block; animation: swing 1.2s ease-in-out infinite; transform-origin: center; font-size: 15px; }
+
+        /* Scroll nos modais - funciona no celular */
+        #agendaContent,
+        #ferramentasContent,
+        #modalContent,
+        #historyContent {
+            overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch !important;
+            overscroll-behavior: contain;
+        }
+
+        /* Travar scroll da página principal quando modal está aberto */
+        body.modal-aberto {
+            overflow: hidden !important;
+            position: fixed !important;
+            width: 100% !important;
+        }
+
+        /* Barra de rolagem visível (desktop) */
+        #agendaContent::-webkit-scrollbar,
+        #ferramentasContent::-webkit-scrollbar,
+        #modalContent::-webkit-scrollbar,
+        #historyContent::-webkit-scrollbar { width: 4px; }
+        #agendaContent::-webkit-scrollbar-track,
+        #ferramentasContent::-webkit-scrollbar-track,
+        #modalContent::-webkit-scrollbar-track,
+        #historyContent::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        #agendaContent::-webkit-scrollbar-thumb,
+        #ferramentasContent::-webkit-scrollbar-thumb,
+        #modalContent::-webkit-scrollbar-thumb,
+        #historyContent::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        .btn-fechar-final { width:100%; padding:14px; background:#f1f5f9; border:none; border-radius:12px; font-size:13px; font-weight:700; color:#475569; cursor:pointer; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:8px; }
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
@@ -414,14 +447,14 @@
     <!-- MODAL AGENDA -->
     <div id="agendaModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleAgenda()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 shadow-2xl translate-y-full" id="agendaContent">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:h-auto overflow-y-scroll transform transition-transform duration-300 shadow-2xl translate-y-full" id="agendaContent" style="-webkit-overflow-scrolling:touch;">
 
             <div class="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2">
                     <svg class="ico text-blue-600" aria-hidden="true"><use href="#i-clock"></use></svg> Agenda & Clientes
                 </h2>
-                <button onclick="toggleAgenda()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200">
-                    <svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg>
+                <button onclick="toggleAgenda()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">
+                    ← Fechar
                 </button>
             </div>
 
@@ -550,21 +583,24 @@
                 </div>
 
             </div>
+
+            <!-- Botão fechar no final -->
+            <div class="p-5 border-t border-slate-100">
+                <button onclick="toggleAgenda()" class="btn-fechar-final">← Fechar Agenda & Clientes</button>
+            </div>
         </div>
     </div>
-
-    <!-- MODAL FERRAMENTAS -->
     <div id="ferramentasModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleFerramentas()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 shadow-2xl translate-y-full" id="ferramentasContent">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:h-auto overflow-y-scroll transform transition-transform duration-300 shadow-2xl translate-y-full" id="ferramentasContent" style="-webkit-overflow-scrolling:touch;">
 
             <!-- Header -->
             <div class="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2">
                     <svg class="ico text-blue-600" aria-hidden="true"><use href="#i-screwdriver-wrench"></use></svg> Ferramentas
                 </h2>
-                <button onclick="toggleFerramentas()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200">
-                    <svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg>
+                <button onclick="toggleFerramentas()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">
+                    ← Fechar
                 </button>
             </div>
 
@@ -1108,6 +1144,11 @@
                 </div>
 
             </div>
+
+            <!-- Botão fechar no final -->
+            <div class="p-5 border-t border-slate-100">
+                <button onclick="toggleFerramentas()" class="btn-fechar-final">← Fechar Ferramentas</button>
+            </div>
         </div>
     </div>
     <div id="printable-area" class="hidden">
@@ -1181,10 +1222,10 @@
     <!-- MODAL CONFIGURAÇÕES -->
     <div id="settingsModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleSettings()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 h-[85vh] sm:h-auto overflow-y-auto transform transition-transform duration-300 shadow-2xl translate-y-full" id="modalContent">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 h-[92vh] sm:h-auto overflow-y-scroll transform transition-transform duration-300 shadow-2xl translate-y-full" id="modalContent" style="-webkit-overflow-scrolling:touch;">
             <div class="flex justify-between items-center mb-6 border-b pb-4">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2"><svg class="ico text-blue-600" aria-hidden="true"><use href="#i-sliders"></use></svg> Ajustes</h2>
-                <button onclick="toggleSettings()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200"><svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg></button>
+                <button onclick="toggleSettings()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">← Fechar</button>
             </div>
             <div class="space-y-6">
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
@@ -1257,6 +1298,7 @@
                     <div id="listaMateriaisBase" class="max-h-40 overflow-y-auto space-y-1 pr-1"></div>
                 </div>
                 <button onclick="salvarConfiguracoes()" class="w-full bg-[#0f172a] text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg">SALVAR ALTERAÇÕES</button>
+                <button onclick="toggleSettings()" class="btn-fechar-final mt-2">← Fechar Configurações</button>
             </div>
         </div>
     </div>
@@ -1264,17 +1306,18 @@
     <!-- MODAL HISTÓRICO -->
     <div id="historyModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleHistory()"></div>
-        <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-white p-0 h-full overflow-y-auto transform transition-transform duration-300 translate-x-full shadow-2xl flex flex-col" id="historyContent">
+        <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-white p-0 h-full overflow-y-scroll transform transition-transform duration-300 translate-x-full shadow-2xl flex flex-col" id="historyContent" style="-webkit-overflow-scrolling:touch;">
             <div class="bg-[#0f172a] text-white p-6 pb-6 flex justify-between items-center sticky top-0 z-10">
                 <div>
                     <h2 class="text-lg font-black uppercase"><svg class="ico mr-2" aria-hidden="true"><use href="#i-clock-rotate-left"></use></svg> Histórico</h2>
                     <p class="text-[10px] text-slate-400">Últimos orçamentos salvos</p>
                 </div>
-                <button onclick="toggleHistory()" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20"><svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg></button>
+                <button onclick="toggleHistory()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,0.15);border:none;border-radius:12px;font-size:12px;font-weight:700;color:white;cursor:pointer;">← Fechar</button>
             </div>
             <div id="historyList" class="flex-grow p-4 space-y-3 bg-slate-50"></div>
             <div class="p-4 border-t border-slate-200 bg-white pb-safe">
                 <button onclick="limparHistorico()" class="w-full py-3 text-red-500 font-bold text-xs border border-red-100 rounded-xl hover:bg-red-50">LIMPAR TUDO</button>
+                <button onclick="toggleHistory()" class="btn-fechar-final mt-2" style="background:#0f172a;color:white;">← Fechar Histórico</button>
             </div>
         </div>
     </div>
@@ -2042,9 +2085,11 @@
             if (m.classList.contains('hidden')) {
                 renderHistoricoUI();
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-aberto');
                 setTimeout(() => c.classList.remove('translate-x-full'), 10);
             } else {
                 c.classList.add('translate-x-full');
+                document.body.classList.remove('modal-aberto');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -2177,11 +2222,13 @@
             const c = document.getElementById('modalContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-aberto');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderListaServicosBase();
                 renderListaMateriaisBase();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-aberto');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -2547,11 +2594,13 @@
             const c = document.getElementById('ferramentasContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-aberto');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderModelosCheck();
                 renderTabelaNBR();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-aberto');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
@@ -3773,8 +3822,8 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
             const c = document.getElementById('agendaContent');
             if (m.classList.contains('hidden')) {
                 m.classList.remove('hidden');
+                document.body.classList.add('modal-aberto');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
-                // setar mês/ano atual no relatório
                 const hoje = new Date();
                 document.getElementById('rel-mes').value = hoje.getMonth();
                 document.getElementById('rel-ano').value = hoje.getFullYear();
@@ -3783,6 +3832,7 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
                 renderGarantias();
             } else {
                 c.classList.add('translate-y-full');
+                document.body.classList.remove('modal-aberto');
                 setTimeout(() => m.classList.add('hidden'), 300);
             }
         }
