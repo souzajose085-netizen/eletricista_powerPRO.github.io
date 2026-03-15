@@ -10,15 +10,13 @@
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ELEC POWER">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="ELEC POWER">
 
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
-    <!-- ÍCONE PERSONALIZADO EP ⚡ embutido -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj4KICA8cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQwIiBmaWxsPSIjMGYxNzJhIi8+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjE3NiIgaGVpZ2h0PSIxNzYiIHJ4PSIzNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuNCIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTA4LDIwIDcyLDEwNSA5NiwxMDUgODQsMTcyIDEzMiw4MCAxMDYsODAiIGZpbGw9IiNmNTllMGIiLz4KICA8dGV4dCB4PSIzMCIgeT0iMTc4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSI1MiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4xNSI+RVA8L3RleHQ+Cjwvc3ZnPg==">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj4KICA8cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQwIiBmaWxsPSIjMGYxNzJhIi8+CiAgPHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjE3NiIgaGVpZ2h0PSIxNzYiIHJ4PSIzNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjQiIG9wYWNpdHk9IjAuNCIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTA4LDIwIDcyLDEwNSA5NiwxMDUgODQsMTcyIDEzMiw4MCAxMDYsODAiIGZpbGw9IiNmNTllMGIiLz4KICA8dGV4dCB4PSIzMCIgeT0iMTc4IiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSI1MiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4xNSI+RVA8L3RleHQ+Cjwvc3ZnPg==">
+    <!-- FAVICON: trocado de ❄️ para ⚡ (mais adequado para eletricista) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
     <!-- LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -37,6 +35,7 @@
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        body.modal-open { overflow: hidden; position: fixed; width: 100%; }
         .pt-safe { padding-top: max(1.25rem, env(safe-area-inset-top)); }
         input, select, textarea { font-size: 16px !important; }
         .input-field:focus {
@@ -69,64 +68,6 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes swing { 0%,100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
-        .emoji-swing { display: inline-block; animation: swing 1.2s ease-in-out infinite; transform-origin: center; font-size: 15px; }
-
-        /* Bloquear scroll da página principal quando modal está aberto */
-        body.modal-open { overflow: hidden !important; }
-
-        /* Barra de rolagem padrão - igual à página principal */
-        .main-scroll,
-        .ferr-scroll,
-        .agenda-scroll,
-        .config-scroll,
-        .history-scroll {
-            overflow-y: scroll !important;
-            -webkit-overflow-scrolling: touch !important;
-            overscroll-behavior: contain !important;
-            scrollbar-width: thin;
-            scrollbar-color: #cbd5e1 #f8fafc;
-        }
-
-        .main-scroll::-webkit-scrollbar,
-        .ferr-scroll::-webkit-scrollbar,
-        .agenda-scroll::-webkit-scrollbar,
-        .config-scroll::-webkit-scrollbar,
-        .history-scroll::-webkit-scrollbar { width: 5px; }
-
-        .main-scroll::-webkit-scrollbar-track,
-        .ferr-scroll::-webkit-scrollbar-track,
-        .agenda-scroll::-webkit-scrollbar-track,
-        .config-scroll::-webkit-scrollbar-track,
-        .history-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
-
-        .main-scroll::-webkit-scrollbar-thumb,
-        .ferr-scroll::-webkit-scrollbar-thumb,
-        .agenda-scroll::-webkit-scrollbar-thumb,
-        .config-scroll::-webkit-scrollbar-thumb,
-        .history-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
-        .main-scroll::-webkit-scrollbar-thumb:hover,
-        .ferr-scroll::-webkit-scrollbar-thumb:hover,
-        .agenda-scroll::-webkit-scrollbar-thumb:hover,
-        .config-scroll::-webkit-scrollbar-thumb:hover,
-        .history-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        /* Barra de rolagem visível (desktop) */
-        #agendaContent::-webkit-scrollbar,
-        #ferramentasContent::-webkit-scrollbar,
-        #modalContent::-webkit-scrollbar,
-        #historyContent::-webkit-scrollbar { width: 4px; }
-        #agendaContent::-webkit-scrollbar-track,
-        #ferramentasContent::-webkit-scrollbar-track,
-        #modalContent::-webkit-scrollbar-track,
-        #historyContent::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-        #agendaContent::-webkit-scrollbar-thumb,
-        #ferramentasContent::-webkit-scrollbar-thumb,
-        #modalContent::-webkit-scrollbar-thumb,
-        #historyContent::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
-        .btn-fechar-final { width:100%; padding:14px; background:#f1f5f9; border:none; border-radius:12px; font-size:13px; font-weight:700; color:#475569; cursor:pointer; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:8px; }
         @media print {
             body * { visibility: hidden; }
             #printable-area, #printable-area * { visibility: visible; }
@@ -138,10 +79,22 @@
             @page { margin: 1cm; size: A4; }
         }
 
+
+        /* ── SCROLLBAR VISÍVEL NOS MODAIS ── */
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: transparent; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .modal-scroll { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; overflow-y: scroll !important; }
+
         /* ── Tailwind utility subset ── */
         *,::before,::after{box-sizing:border-box}
         .pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-y-0{top:0;bottom:0}.left-0{left:0}.left-3{left:.75rem}.left-4{left:1rem}.right-0{right:0}.right-2{right:.5rem}.right-4{right:1rem}.top-0{top:0}.top-1\/2{top:50%}.top-3{top:.75rem}.bottom-0{bottom:0}.right-3{right:.75rem}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.col-span-1{grid-column:span 1/span 1}.col-span-2{grid-column:span 2/span 2}.-mt-6{margin-top:-1.5rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-5{margin-bottom:1.25rem}.ml-1{margin-left:.25rem}.mt-0\.5{margin-top:.125rem}.mt-4{margin-top:1rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:.25rem}.mr-2{margin-right:.5rem}.mt-2{margin-top:.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-32{height:8rem}.h-9{height:2.25rem}.h-full{height:100%}.h-6{height:1.5rem}.h-8{height:2rem}.h-\[85vh\]{height:85vh}.max-h-40{max-height:10rem}.min-h-\[100dvh\]{min-height:100dvh}.w-1{width:.25rem}.w-10{width:2.5rem}.w-32{width:8rem}.w-9{width:2.25rem}.w-full{width:100%}.w-20{width:5rem}.w-24{width:6rem}.w-6{width:1.5rem}.w-8{width:2rem}.max-w-md{max-width:28rem}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.flex-grow{flex-grow:1}.-translate-y-1\/2{transform:translateY(-50%)}.-translate-y-10{transform:translateY(-2.5rem)}.translate-x-10{transform:translateX(2.5rem)}.translate-x-full{transform:translateX(100%)}.translate-y-full{transform:translateY(100%)}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-pointer{cursor:pointer}.touch-manipulation{touch-action:manipulation}.select-all{-webkit-user-select:all;user-select:all}.resize-none{resize:none}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.space-y-3>:not([hidden])~:not([hidden]){margin-top:.75rem}.space-y-5>:not([hidden])~:not([hidden]){margin-top:1.25rem}.space-y-1>:not([hidden])~:not([hidden]){margin-top:.25rem}.space-y-6>:not([hidden])~:not([hidden]){margin-top:1.5rem}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-t-\[1\.5rem\]{border-top-left-radius:1.5rem;border-top-right-radius:1.5rem}.rounded-t-3xl{border-top-left-radius:1.5rem;border-top-right-radius:1.5rem}.rounded-l-lg{border-top-left-radius:.5rem;border-bottom-left-radius:.5rem}.rounded-r-lg{border-top-right-radius:.5rem;border-bottom-right-radius:.5rem}.border{border-width:1px}.border-0{border-width:0}.border-2{border-width:2px}.border-t{border-top-width:1px}.border-b{border-bottom-width:1px}.border-dashed{border-style:dashed}.border-blue-100{border-color:rgb(219 234 254)}.border-blue-500\/30{border-color:rgb(59 130 246/.3)}.border-green-100{border-color:rgb(220 252 231)}.border-orange-100{border-color:rgb(255 237 213)}.border-slate-100{border-color:rgb(241 245 249)}.border-slate-200{border-color:rgb(226 232 240)}.border-slate-300{border-color:rgb(203 213 225)}.border-slate-700{border-color:rgb(51 65 85)}.border-white\/5{border-color:rgb(255 255 255/.05)}.border-blue-200{border-color:rgb(191 219 254)}.border-green-200{border-color:rgb(187 247 208)}.border-red-100{border-color:rgb(254 226 226)}.bg-\[\#0f172a\]{background-color:rgb(15 23 42)}.bg-blue-100{background-color:rgb(219 234 254)}.bg-blue-50{background-color:rgb(239 246 255)}.bg-blue-500{background-color:rgb(59 130 246)}.bg-blue-600{background-color:rgb(37 99 235)}.bg-green-50{background-color:rgb(240 253 244)}.bg-orange-50{background-color:rgb(255 247 237)}.bg-slate-50{background-color:rgb(248 250 252)}.bg-white{background-color:#fff}.bg-white\/10{background-color:rgb(255 255 255/.1)}.bg-green-100{background-color:rgb(220 252 231)}.bg-green-600{background-color:rgb(22 163 74)}.bg-orange-100{background-color:rgb(255 237 213)}.bg-orange-500{background-color:rgb(249 115 22)}.bg-slate-100{background-color:rgb(241 245 249)}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-blue-600{--tw-gradient-from:#2563eb;--tw-gradient-stops:var(--tw-gradient-from),rgb(37 99 235/0)}.to-blue-700{--tw-gradient-to:#1d4ed8}.object-contain{object-fit:contain}.p-0{padding:0}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.pb-10{padding-bottom:2.5rem}.pb-20{padding-bottom:5rem}.pl-10{padding-left:2.5rem}.pl-9{padding-left:2.25rem}.pr-28{padding-right:7rem}.pr-6{padding-right:1.5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pr-1{padding-right:.25rem}.pl-8{padding-left:2rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace,monospace}.text-5xl{font-size:3rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.tracking-tighter{letter-spacing:-.05em}.tracking-wide{letter-spacing:.025em}.tracking-widest{letter-spacing:.1em}.text-blue-200{color:rgb(191 219 254)}.text-blue-300{color:rgb(147 197 253)}.text-blue-400{color:rgb(96 165 250)}.text-blue-500{color:rgb(59 130 246)}.text-blue-600{color:rgb(37 99 235)}.text-blue-700{color:rgb(29 78 216)}.text-green-400{color:rgb(74 222 128)}.text-green-500{color:rgb(34 197 94)}.text-orange-500{color:rgb(249 115 22)}.text-red-300{color:rgb(252 165 165)}.text-red-500{color:rgb(239 68 68)}.text-slate-300{color:rgb(203 213 225)}.text-slate-400{color:rgb(148 163 184)}.text-slate-500{color:rgb(100 116 139)}.text-slate-600{color:rgb(71 85 105)}.text-slate-700{color:rgb(51 65 85)}.text-slate-800{color:rgb(30 41 59)}.text-white{color:#fff}.text-yellow-300{color:rgb(253 224 71)}.text-green-600{color:rgb(22 163 74)}.text-orange-600{color:rgb(234 88 12)}.text-red-400{color:rgb(248 113 113)}.placeholder-slate-400::placeholder{color:rgb(148 163 184)}.opacity-0{opacity:0}.opacity-20{opacity:.2}.opacity-60{opacity:.6}.opacity-90{opacity:.9}.shadow-lg{box-shadow:0 10px 15px -3px rgb(0 0 0/.1),0 4px 6px -4px rgb(0 0 0/.1)}.shadow-none{box-shadow:none}.shadow-sm{box-shadow:0 1px 2px 0 rgb(0 0 0/.05)}.shadow-xl{box-shadow:0 20px 25px -5px rgb(0 0 0/.1),0 8px 10px -6px rgb(0 0 0/.1)}.shadow-2xl{box-shadow:0 25px 50px -12px rgb(0 0 0/.25)}.shadow-\[0_-10px_20px_-5px_rgba\(0\2c0\2c0\2c0\.1\)\]{box-shadow:0 -10px 20px -5px rgba(0,0,0,.1)}.shadow-blue-500\/20{--tw-shadow-color:rgb(59 130 246/.2)}.shadow-blue-600\/30{--tw-shadow-color:rgb(37 99 235/.3)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring-4{box-shadow:0 0 0 4px var(--tw-ring-color,rgb(59 130 246/.5))}.ring-slate-100{--tw-ring-color:rgb(241 245 249)}.blur-2xl{filter:blur(40px)}.blur-3xl{filter:blur(64px)}.drop-shadow-lg{filter:drop-shadow(0 10px 8px rgb(0 0 0/.04)) drop-shadow(0 4px 3px rgb(0 0 0/.1))}.backdrop-blur-md{backdrop-filter:blur(12px)}.backdrop-blur-sm{backdrop-filter:blur(4px)}.transition-all{transition:all .15s cubic-bezier(.4,0,.2,1)}.transition-colors{transition:color,background-color,border-color .15s cubic-bezier(.4,0,.2,1)}.transition-opacity{transition:opacity .15s cubic-bezier(.4,0,.2,1)}.transition-transform{transition:transform .15s cubic-bezier(.4,0,.2,1)}.duration-300{transition-duration:300ms}.file\:mr-4::file-selector-button{margin-right:1rem}.file\:rounded-full::file-selector-button{border-radius:9999px}.file\:border-0::file-selector-button{border-width:0}.file\:bg-blue-50::file-selector-button{background-color:rgb(239 246 255)}.file\:px-4::file-selector-button{padding-left:1rem;padding-right:1rem}.file\:py-2::file-selector-button{padding-top:.5rem;padding-bottom:.5rem}.file\:text-xs::file-selector-button{font-size:.75rem;line-height:1rem}.file\:font-semibold::file-selector-button{font-weight:600}.file\:text-blue-700::file-selector-button{color:rgb(29 78 216)}.hover\:border-blue-500:hover{border-color:rgb(59 130 246)}.hover\:bg-blue-50:hover{background-color:rgb(239 246 255)}.hover\:bg-slate-50:hover{background-color:rgb(248 250 252)}.hover\:bg-white:hover{background-color:#fff}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255/.2)}.hover\:bg-black:hover{background-color:#000}.hover\:bg-blue-700:hover{background-color:rgb(29 78 216)}.hover\:bg-green-50:hover{background-color:rgb(240 253 244)}.hover\:bg-green-700:hover{background-color:rgb(21 128 61)}.hover\:bg-orange-600:hover{background-color:rgb(234 88 12)}.hover\:bg-red-50:hover{background-color:rgb(254 242 242)}.hover\:bg-slate-200:hover{background-color:rgb(226 232 240)}.hover\:from-blue-700:hover{--tw-gradient-from:#1d4ed8}.hover\:to-blue-800:hover{--tw-gradient-to:#1e40af}.hover\:text-blue-600:hover{color:rgb(37 99 235)}.hover\:text-red-400:hover{color:rgb(248 113 113)}.hover\:text-red-600:hover{color:rgb(220 38 38)}.hover\:underline:hover{text-decoration-line:underline}.hover\:file\:bg-blue-100::file-selector-button:hover{background-color:rgb(219 234 254)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.active\:scale-95:active{transform:scale(.95)}.active\:scale-\[0\.98\]:active{transform:scale(.98)}@keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}.group:hover .group-hover\:animate-bounce{animation:bounce 1s infinite}.group:hover .group-hover\:opacity-100{opacity:1}@media(min-width:640px){.sm\:inset-auto{inset:auto}.sm\:left-1\/2{left:50%}.sm\:top-1\/2{top:50%}.sm\:h-auto{height:auto}.sm\:min-h-0{min-height:0}.sm\:-translate-x-1\/2{transform:translateX(-50%)}.sm\:-translate-y-1\/2{transform:translateY(-50%)}.sm\:justify-center{justify-content:center}.sm\:rounded-3xl{border-radius:1.5rem}.sm\:border{border-width:1px}.sm\:p-4{padding:1rem}.sm\:shadow-2xl{box-shadow:0 25px 50px -12px rgb(0 0 0/.25)}}
-    </style>
+    
+        .flex-shrink-0{flex-shrink:0}
+        .sm\:max-h-\[90vh\]{max-height:90vh}
+        .max-h-\[90vh\]{max-height:90vh}
+        </style>
 <style>
 .ico{display:inline-block;width:1em;height:1em;vertical-align:-0.125em;fill:currentColor;}
 </style>
@@ -182,37 +135,6 @@
 </head>
 <body class="text-slate-800 pb-safe">
 
-    <!-- TELA DE LOGIN -->
-    <div id="login-screen" style="display:flex;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:16px;background:#0f172a;">
-        <div style="width:100%;max-width:360px;background:white;border-radius:24px;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,0.5);">
-
-            <div style="background:#0f172a;padding:32px;text-align:center;">
-                <div style="font-size:32px;margin-bottom:8px;">⚡</div>
-                <h1 style="color:white;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:2px;margin:0;">ELETRICISTA <span style="color:#3b82f6;">POWER</span></h1>
-                <p style="color:#93c5fd;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-top:4px;">Ferramenta CALC NBR 🛠️</p>
-            </div>
-
-            <div style="padding:24px;">
-                <div style="margin-bottom:12px;">
-                    <label style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;display:block;margin-bottom:4px;">Usuário</label>
-                    <input type="text" id="login-user" placeholder="Digite seu usuário" autocomplete="off" autocorrect="off" autocapitalize="off"
-                        style="width:100%;padding:12px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-weight:700;color:#1e293b;outline:none;box-sizing:border-box;">
-                </div>
-                <div style="margin-bottom:16px;">
-                    <label style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;display:block;margin-bottom:4px;">Senha</label>
-                    <div style="position:relative;">
-                        <input type="password" id="login-pass" placeholder="Digite sua senha" autocomplete="off"
-                            style="width:100%;padding:12px;padding-right:44px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-weight:700;color:#1e293b;outline:none;box-sizing:border-box;">
-                        <button onclick="toggleSenha()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;">👁</button>
-                    </div>
-                </div>
-                <div id="login-erro" style="display:none;background:#fef2f2;color:#dc2626;font-size:12px;font-weight:700;text-align:center;padding:8px;border-radius:8px;margin-bottom:12px;">❌ Usuário ou senha incorretos!</div>
-                <button onclick="fazerLogin()" style="width:100%;padding:14px;background:#f97316;border:none;border-radius:12px;font-size:15px;font-weight:900;color:#000;cursor:pointer;">ENTRAR →</button>
-                <p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:12px;">Eletricista Power PRO © 2025</p>
-            </div>
-        </div>
-    </div>
-
     <div class="app-wrapper min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center p-0 sm:p-4 no-print">
         <div class="w-full max-w-md bg-white sm:rounded-3xl overflow-hidden border-0 sm:border border-slate-200 shadow-none sm:shadow-2xl relative z-10 flex flex-col min-h-[100dvh] sm:min-h-0">
 
@@ -226,7 +148,7 @@
                     <div>
                         <div class="flex items-center gap-2 opacity-90">
                             <svg class="ico text-yellow-300 text-sm animate-pulse" aria-hidden="true"><use href="#i-bolt"></use></svg>
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-blue-200">Ferramenta CALC NBR <span class="emoji-swing">🛠️</span></span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-blue-200">elétrica</span>
                         </div>
                         <h1 class="text-lg font-black uppercase tracking-wide text-white leading-none mt-0.5">
                             ELETRICISTA <span class="text-blue-500">POWER</span>
@@ -250,7 +172,7 @@
             </header>
 
             <!-- CONTEÚDO SCROLLÁVEL -->
-            <div class="relative -mt-6 bg-white rounded-t-[1.5rem] flex-grow shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] z-30 main-scroll pb-20">
+            <div class="relative -mt-6 bg-white rounded-t-[1.5rem] flex-grow shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] z-30 overflow-y-auto pb-20">
                 <div class="p-5 pt-6">
 
                     <!-- TELA 1: INPUTS -->
@@ -470,26 +392,26 @@
     <!-- MODAL AGENDA -->
     <div id="agendaModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleAgenda()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="agendaContent">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:max-h-[90vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="agendaContent">
 
-            <div class="flex justify-between items-center p-5 border-b bg-white flex-shrink-0" style="border-radius:1.5rem 1.5rem 0 0;">
+            <div class="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2">
                     <svg class="ico text-blue-600" aria-hidden="true"><use href="#i-clock"></use></svg> Agenda & Clientes
                 </h2>
-                <button onclick="toggleAgenda()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">
-                    ← Fechar
+                <button onclick="toggleAgenda()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200">
+                    <svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg>
                 </button>
             </div>
 
             <!-- Abas -->
-            <div class="flex border-b bg-slate-50 flex-shrink-0">
+            <div class="flex border-b bg-slate-50 sticky top-[73px] z-10">
                 <button onclick="trocarAbaAgenda('visitas')"   id="atab-visitas"   class="agenda-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-blue-600 border-b-2 border-blue-600">Agenda</button>
                 <button onclick="trocarAbaAgenda('clientes')"  id="atab-clientes"  class="agenda-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">Clientes</button>
                 <button onclick="trocarAbaAgenda('garantias')" id="atab-garantias" class="agenda-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">Garantias</button>
                 <button onclick="trocarAbaAgenda('relatorio')" id="atab-relatorio" class="agenda-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">Relatório</button>
             </div>
 
-            <div class="flex-1 agenda-scroll p-5 space-y-4" style="-webkit-overflow-scrolling:touch;overscroll-behavior:contain;">
+            <div class="p-5 space-y-4 overflow-y-auto flex-grow pb-safe modal-scroll">
 
                 <!-- ABA: AGENDA DE VISITAS -->
                 <div id="agenda-visitas">
@@ -606,29 +528,26 @@
                 </div>
 
             </div>
-
-            <!-- Botão fechar no final -->
-            <div class="p-5 border-t border-slate-100">
-                <button onclick="toggleAgenda()" class="btn-fechar-final">← Fechar Agenda & Clientes</button>
-            </div>
         </div>
     </div>
+
+    <!-- MODAL FERRAMENTAS -->
     <div id="ferramentasModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleFerramentas()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="ferramentasContent">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] sm:max-h-[90vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="ferramentasContent">
 
-            <!-- Header fixo -->
-            <div class="flex justify-between items-center p-5 border-b bg-white flex-shrink-0" style="border-radius:1.5rem 1.5rem 0 0;">
+            <!-- Header -->
+            <div class="flex justify-between items-center p-6 border-b sticky top-0 bg-white z-10">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2">
                     <svg class="ico text-blue-600" aria-hidden="true"><use href="#i-screwdriver-wrench"></use></svg> Ferramentas
                 </h2>
-                <button onclick="toggleFerramentas()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">
-                    ← Fechar
+                <button onclick="toggleFerramentas()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200">
+                    <svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg>
                 </button>
             </div>
 
-            <!-- Abas fixas -->
-            <div class="flex border-b bg-slate-50 flex-shrink-0">
+            <!-- Abas -->
+            <div class="flex border-b bg-slate-50 sticky top-[73px] z-10">
                 <button onclick="trocarAbaFerr('nbr')"     id="tab-nbr"     class="ferr-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-blue-600 border-b-2 border-blue-600">NBR 5410</button>
                 <button onclick="trocarAbaFerr('carga')"   id="tab-carga"   class="ferr-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">Demanda</button>
                 <button onclick="trocarAbaFerr('queda')"   id="tab-queda"   class="ferr-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">Queda V</button>
@@ -636,8 +555,7 @@
                 <button onclick="trocarAbaFerr('ia')"      id="tab-ia"      class="ferr-tab flex-1 py-3 text-[10px] font-bold uppercase tracking-wide text-slate-400 border-b-2 border-transparent">⚡ IA</button>
             </div>
 
-            <!-- Conteúdo com scroll -->
-            <div class="flex-1 ferr-scroll p-5 space-y-4" style="-webkit-overflow-scrolling:touch;overscroll-behavior:contain;">
+            <div class="p-5 space-y-4 overflow-y-auto flex-grow pb-safe modal-scroll">
 
                 <!-- ABA: NBR 5410 -->
                 <div id="ferr-nbr" class="space-y-4">
@@ -1111,6 +1029,8 @@
                         <button onclick="resetChecklist()" class="w-full py-2 text-xs font-bold text-slate-400 hover:text-red-500 transition-colors">↺ Resetar checklist</button>
                     </div>
 
+                </div><!-- /ferr-check -->
+
                 <!-- ABA: IA ASSISTENTE -->
                 <div id="ferr-ia" class="hidden space-y-4">
 
@@ -1152,8 +1072,8 @@
                         </label>
                     </div>
 
-                    <button onclick="consultarIA()" id="btn-ia" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
-                        ⚡ CONSULTAR IA
+                    <button disabled id="btn-ia" class="w-full bg-slate-200 text-slate-400 font-black py-4 rounded-2xl text-sm flex items-center justify-center gap-2 cursor-not-allowed">
+                        ⚡ IA — Em breve
                     </button>
 
                     <!-- Resultado -->
@@ -1168,13 +1088,9 @@
                 </div>
 
             </div>
-
-            <!-- Botão fechar no final -->
-            <div class="p-5 border-t border-slate-100">
-                <button onclick="toggleFerramentas()" class="btn-fechar-final">← Fechar Ferramentas</button>
-            </div>
         </div>
     </div>
+    <!-- ÁREA DE IMPRESSÃO (PDF) -->
     <div id="printable-area" class="hidden">
         <div style="font-family:'Inter',sans-serif;color:#334155;max-width:800px;margin:0 auto;padding:40px;">
             <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e2e8f0;padding-bottom:20px;margin-bottom:30px;">
@@ -1246,19 +1162,25 @@
     <!-- MODAL CONFIGURAÇÕES -->
     <div id="settingsModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleSettings()"></div>
-        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[92vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="modalContent">
-            <div class="flex justify-between items-center p-5 border-b bg-white flex-shrink-0" style="border-radius:1.5rem 1.5rem 0 0;">
+        <div class="absolute inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl h-[90vh] sm:max-h-[90vh] flex flex-col transform transition-transform duration-300 shadow-2xl translate-y-full" id="modalContent">
+            <div class="flex justify-between items-center p-6 border-b bg-white z-10 flex-shrink-0 rounded-t-3xl">
                 <h2 class="text-lg font-black text-slate-800 uppercase flex items-center gap-2"><svg class="ico text-blue-600" aria-hidden="true"><use href="#i-sliders"></use></svg> Ajustes</h2>
-                <button onclick="toggleSettings()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:#f1f5f9;border:none;border-radius:12px;font-size:12px;font-weight:700;color:#475569;cursor:pointer;">← Fechar</button>
+                <button onclick="toggleSettings()" class="w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200"><svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg></button>
             </div>
-            <div class="flex-1 config-scroll p-6 space-y-6" style="-webkit-overflow-scrolling:touch;overscroll-behavior:contain;">
+            <div class="overflow-y-auto flex-grow p-6 space-y-6 pb-safe modal-scroll">
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><svg class="ico text-blue-500 mr-1" aria-hidden="true"><use href="#i-image"></use></svg> Seu Logótipo</h3>
                     <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(this)" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <button onclick="removerLogo()" class="text-[10px] text-red-500 font-bold mt-2 uppercase hover:underline">Remover Logo</button>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><svg class="ico text-blue-500 mr-1" aria-hidden="true"><use href="#i-user-tag"></use></svg> Dados do Prestador</h3>
+                    <input type="text" id="configNomePrestador" placeholder="Seu Nome / Sua Empresa" class="input-field w-full p-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none placeholder-slate-400 transition-all">
+                    <p class="text-[10px] text-slate-400 mt-2">Nome que aparece nos orçamentos e mensagens.</p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><svg class="ico text-blue-500 mr-1" aria-hidden="true"><use href="#i-percent"></use></svg> Configuração de Pagamento</h3>
+                    <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold text-slate-700">Sinal exigido (%)</label>
                         <div class="relative w-24">
@@ -1266,7 +1188,12 @@
                             <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 font-bold">%</span>
                         </div>
                     </div>
-                    <p class="text-[10px] text-slate-400 mt-2">Define a % cobrada na mensagem de "Cobrança de Sinal".</p>
+                    <div>
+                        <label class="text-xs font-bold text-slate-700 block mb-1">Chave Pix</label>
+                        <input type="text" id="configPix" placeholder="CPF, e-mail, telefone ou chave aleatória" class="input-field w-full p-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-700 outline-none">
+                    </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2">A chave Pix aparece automaticamente nas mensagens de cobrança.</p>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                     <h3 class="text-xs font-bold text-slate-500 uppercase mb-3"><svg class="ico text-blue-500 mr-1" aria-hidden="true"><use href="#i-cloud-arrow-up"></use></svg> Backup &amp; Segurança</h3>
@@ -1322,7 +1249,6 @@
                     <div id="listaMateriaisBase" class="max-h-40 overflow-y-auto space-y-1 pr-1"></div>
                 </div>
                 <button onclick="salvarConfiguracoes()" class="w-full bg-[#0f172a] text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg">SALVAR ALTERAÇÕES</button>
-                <button onclick="toggleSettings()" class="btn-fechar-final mt-2">← Fechar Configurações</button>
             </div>
         </div>
     </div>
@@ -1331,17 +1257,16 @@
     <div id="historyModal" class="fixed inset-0 z-50 hidden">
         <div class="modal-overlay absolute inset-0 w-full h-full" onclick="toggleHistory()"></div>
         <div class="absolute inset-y-0 right-0 w-full max-w-sm bg-white p-0 h-full flex flex-col transform transition-transform duration-300 translate-x-full shadow-2xl" id="historyContent">
-            <div class="bg-[#0f172a] text-white p-6 pb-6 flex justify-between items-center flex-shrink-0">
+            <div class="bg-[#0f172a] text-white p-6 pb-6 flex justify-between items-center sticky top-0 z-10">
                 <div>
                     <h2 class="text-lg font-black uppercase"><svg class="ico mr-2" aria-hidden="true"><use href="#i-clock-rotate-left"></use></svg> Histórico</h2>
                     <p class="text-[10px] text-slate-400">Últimos orçamentos salvos</p>
                 </div>
-                <button onclick="toggleHistory()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,0.15);border:none;border-radius:12px;font-size:12px;font-weight:700;color:white;cursor:pointer;">← Fechar</button>
+                <button onclick="toggleHistory()" class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20"><svg class="ico" aria-hidden="true"><use href="#i-xmark"></use></svg></button>
             </div>
-            <div id="historyList" class="flex-1 history-scroll p-4 space-y-3 bg-slate-50" style="-webkit-overflow-scrolling:touch;overscroll-behavior:contain;"></div>
-            <div class="p-4 border-t border-slate-200 bg-white flex-shrink-0">
+            <div id="historyList" class="flex-grow p-4 space-y-3 bg-slate-50 overflow-y-auto modal-scroll"></div>
+            <div class="p-4 border-t border-slate-200 bg-white pb-safe">
                 <button onclick="limparHistorico()" class="w-full py-3 text-red-500 font-bold text-xs border border-red-100 rounded-xl hover:bg-red-50">LIMPAR TUDO</button>
-                <button onclick="toggleHistory()" class="btn-fechar-final mt-2" style="background:#0f172a;color:white;">← Fechar Histórico</button>
             </div>
         </div>
     </div>
@@ -1450,10 +1375,11 @@
 
         function formatarMoeda(input) {
             let v = input.value.replace(/\D/g, '');
-            v = (v / 100).toFixed(2) + '';
+            if (!v) { input.value = ''; return; }
+            v = (parseInt(v, 10) / 100).toFixed(2) + '';
             v = v.replace('.', ',');
             v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-            input.value = v === '0,00' ? '' : v;
+            input.value = v;
         }
 
         function parseMoeda(valorString) {
@@ -1490,6 +1416,7 @@
             const saved = localStorage.getItem('refrigBlindadoV5');
             if (saved) state = { ...state, ...JSON.parse(saved) };
             if (!state.sinalPercent) state.sinalPercent = 30;
+            if (!state.custoHora) state.custoHora = 0;
             if (!state.historico) state.historico = [];
             if (!state.meusMateriais) state.meusMateriais = [];
             if (!state.modelosCheck) state.modelosCheck = [];
@@ -1503,59 +1430,6 @@
             if (precisaMigrar) state.meusMateriais = [];
             applyConfigToUI();
         }
-
-        // ─────────────────────────────────────────────
-        // LOGIN
-        // ─────────────────────────────────────────────
-        const _u = btoa('INOVAR');
-        const _p = btoa('INOVAReletrica0204');
-
-        function fazerLogin() {
-            const u = document.getElementById('login-user').value.trim();
-            const p = document.getElementById('login-pass').value;
-            const erro = document.getElementById('login-erro');
-            if (btoa(u) === _u && btoa(p) === _p) {
-                document.getElementById('login-screen').style.display = 'none';
-                sessionStorage.setItem('ep_auth', '1');
-            } else {
-                erro.style.display = 'block';
-                document.getElementById('login-pass').value = '';
-                document.getElementById('login-pass').focus();
-                setTimeout(() => { erro.style.display = 'none'; }, 3000);
-            }
-        }
-
-        function toggleSenha() {
-            const inp = document.getElementById('login-pass');
-            inp.type = inp.type === 'password' ? 'text' : 'password';
-        }
-
-        function mostrarLogin() {
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('login-user').value = '';
-            document.getElementById('login-pass').value = '';
-            document.getElementById('login-erro').style.display = 'none';
-            setTimeout(() => document.getElementById('login-user').focus(), 100);
-        }
-
-        // Bloquear cliques fora da tela de login
-        document.addEventListener('click', function(e) {
-            if (sessionStorage.getItem('ep_auth') !== '1') {
-                const tela = document.getElementById('login-screen');
-                if (tela && !tela.contains(e.target)) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    mostrarLogin();
-                }
-            }
-        }, true);
-
-        // Sempre mostrar login ao abrir
-        window.addEventListener('DOMContentLoaded', () => {
-            sessionStorage.removeItem('ep_auth');
-            document.getElementById('login-screen').style.display = 'flex';
-            setTimeout(() => document.getElementById('login-user').focus(), 300);
-        });
 
         function saveState() {
             localStorage.setItem('refrigBlindadoV5', JSON.stringify(state));
@@ -1572,6 +1446,10 @@
                 document.getElementById('printLogo').style.display = 'none';
             }
             document.getElementById('nomePrestador').value = state.prestadorPadrao || '';
+            const cfgField = document.getElementById('configNomePrestador');
+            if (cfgField) cfgField.value = state.prestadorPadrao || '';
+            const pixField = document.getElementById('configPix');
+            if (pixField) pixField.value = state.chavePix || '';
             document.getElementById('configSinal').value = state.sinalPercent || 30;
         }
 
@@ -1943,10 +1821,12 @@
             });
 
             const km           = parseFloat(document.getElementById('distanciaKm').value) || 0;
+            const horas        = parseFloat(document.getElementById('tempoHoras').value) || 0;
             const garantiaDias = document.getElementById('inputGarantia').value || 90;
             const dadosVeiculo = DATA_VEICULOS[state.veiculo] || DATA_VEICULOS.hatch;
             const custoLog     = km * ((state.gasolina / dadosVeiculo.eficiencia) + dadosVeiculo.custoKm);
-            const totalFinal   = totalServicos + mat + custoLog;
+            const custoHoras   = horas * (state.custoHora || 0);
+            const totalFinal   = totalServicos + mat + custoLog + custoHoras;
             const percSinal    = state.sinalPercent || 30;
             const valorSinal   = totalFinal * (percSinal / 100);
 
@@ -1954,8 +1834,8 @@
             document.getElementById('displayMaoObra').innerText    = formatBRL(totalServicos);
             document.getElementById('displayMateriais').innerText  = formatBRL(mat);
             document.getElementById('displayPrecoFinal').innerText = formatBRL(totalFinal);
-            document.getElementById('displayLucroLiquido').innerText = formatBRL(totalServicos);
-            document.getElementById('displayDespesas').innerText   = formatBRL(mat + custoLog);
+            document.getElementById('displayLucroLiquido').innerText = formatBRL(totalServicos - custoLog - custoHoras);
+            document.getElementById('displayDespesas').innerText   = formatBRL(mat + custoLog + custoHoras);
 
             dadosOrcamento = {
                 id:          Date.now(),
@@ -1997,7 +1877,7 @@
                 `*ORÇAMENTO TÉCNICO - ELETRICISTA POWER*\n\nOlá ${d.cliente}! Segue o orçamento:\n\n*SERVIÇOS:*\n${lista}${listaMat}\n\n*OBS:* ${d.detalhes}${endTxt}\n\n*INVESTIMENTO TOTAL:* ${formatBRL(d.total)}\n(Material + Mão de Obra incluso)\n\n*Garantia:* ${d.garantia}\n*Data Prevista:* ${d.data}\n\nFico no aguardo.\n${d.prestador}`;
 
             document.getElementById('txt_sinal').innerText =
-                `Olá ${d.cliente}! 👋\n\nPara agendarmos dia *${d.data}* e comprarmos material, precisamos de um sinal.\n\n*Sinal (${d.sinalPercent}%): ${formatBRL(d.sinal)}*\n\nChave PIX: [SUA CHAVE]\n\nPor favor, envie o comprovante. Obrigado!`;
+                `Olá ${d.cliente}! 👋\n\nPara agendarmos dia *${d.data}* e comprarmos material, precisamos de um sinal.\n\n*Sinal (${d.sinalPercent}%): ${formatBRL(d.sinal)}*\n\nChave PIX: ${state.chavePix || '[Configure sua chave Pix nas Configurações]'}\n\nPor favor, envie o comprovante. Obrigado!`;
 
             document.getElementById('txt_final').innerText =
                 `*Serviço Concluído!* ✅\n\n${d.cliente}, trabalho pronto.\n\n*Saldo Restante:* ${formatBRL(d.saldo)}\n\nLembrando que você tem *${d.garantia}* de garantia.\n\nObrigado pela preferência!\n${d.prestador}`;
@@ -2099,22 +1979,29 @@
         // ─────────────────────────────────────────────
         function salvarNoHistorico(dados) {
             state.historico.unshift(dados);
-            if (state.historico.length > 10) state.historico.pop();
+            if (state.historico.length > 200) state.historico.pop();
             saveState();
+        }
+
+        // ── SCROLL LOCK ──
+        function lockScroll()   { document.body.classList.add('modal-open'); }
+        function unlockScroll() {
+            const abertos = ['agendaModal','ferramentasModal','historyModal','settingsModal']
+                .some(id => !document.getElementById(id).classList.contains('hidden'));
+            if (!abertos) document.body.classList.remove('modal-open');
         }
 
         function toggleHistory() {
             const m = document.getElementById('historyModal');
             const c = document.getElementById('historyContent');
             if (m.classList.contains('hidden')) {
+                lockScroll();
                 renderHistoricoUI();
                 m.classList.remove('hidden');
-                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-x-full'), 10);
             } else {
                 c.classList.add('translate-x-full');
-                document.body.classList.remove('modal-open');
-                setTimeout(() => m.classList.add('hidden'), 300);
+                setTimeout(() => { m.classList.add('hidden'); unlockScroll(); }, 300);
             }
         }
 
@@ -2221,7 +2108,9 @@
             });
 
             toggleHistory();
-            reiniciar();
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function limparHistorico() {
@@ -2245,27 +2134,19 @@
             const m = document.getElementById('settingsModal');
             const c = document.getElementById('modalContent');
             if (m.classList.contains('hidden')) {
+                lockScroll();
                 m.classList.remove('hidden');
-                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderListaServicosBase();
                 renderListaMateriaisBase();
             } else {
                 c.classList.add('translate-y-full');
-                document.body.classList.remove('modal-open');
-                setTimeout(() => m.classList.add('hidden'), 300);
+                setTimeout(() => { m.classList.add('hidden'); unlockScroll(); }, 300);
             }
         }
 
         function toggleAccordion(id) {
             document.getElementById(id).classList.toggle('accordion-open');
-            // Inicializar cômodos padrão ao abrir pela primeira vez
-            if (id === 'acc-nbr-comodo') {
-                const lista = document.getElementById('comodos-lista');
-                if (lista && lista.children.length === 0) {
-                    ['🛏 Quarto','🛋 Sala','🍳 Cozinha','🚿 Banheiro'].forEach(n => adicionarComodo(n));
-                }
-            }
         }
 
         function handleLogoUpload(input) {
@@ -2343,8 +2224,13 @@
         }
 
         function salvarConfiguracoes() {
-            state.prestadorPadrao = document.getElementById('nomePrestador').value;
-            state.sinalPercent    = parseFloat(document.getElementById('configSinal').value) || 30;
+            const nomeConfig = document.getElementById('configNomePrestador').value.trim();
+            if (nomeConfig) {
+                state.prestadorPadrao = nomeConfig;
+                document.getElementById('nomePrestador').value = nomeConfig;
+            }
+            state.sinalPercent = parseFloat(document.getElementById('configSinal').value) || 30;
+            state.chavePix = document.getElementById('configPix').value.trim();
             saveState();
             applyConfigToUI();
             toggleSettings();
@@ -2617,15 +2503,14 @@
             const m = document.getElementById('ferramentasModal');
             const c = document.getElementById('ferramentasContent');
             if (m.classList.contains('hidden')) {
+                lockScroll();
                 m.classList.remove('hidden');
-                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
                 renderModelosCheck();
                 renderTabelaNBR();
             } else {
                 c.classList.add('translate-y-full');
-                document.body.classList.remove('modal-open');
-                setTimeout(() => m.classList.add('hidden'), 300);
+                setTimeout(() => { m.classList.add('hidden'); unlockScroll(); }, 300);
             }
         }
 
@@ -2652,144 +2537,6 @@
         // ─────────────────────────────────────────────
         // IA ASSISTENTE
         // ─────────────────────────────────────────────
-        async function consultarIA() {
-            const servico = document.getElementById('ia-servico').value.trim();
-            if (!servico) { alert('Descreva o serviço antes de consultar.'); return; }
-
-            const apiKey = document.getElementById('ia-apikey').value.trim() || localStorage.getItem('ep_apikey') || '';
-            if (!apiKey || !apiKey.startsWith('sk-')) {
-                alert('Informe sua chave API Anthropic (sk-ant-...) no campo acima.');
-                return;
-            }
-
-            const optMat   = document.getElementById('ia-opt-materiais').checked;
-            const optCheck = document.getElementById('ia-opt-checklist').checked;
-            const optPreco = document.getElementById('ia-opt-preco').checked;
-            const optNbr   = document.getElementById('ia-opt-nbr').checked;
-
-            const partes = [];
-            if (optMat)   partes.push('1. MATERIAIS NECESSÁRIOS: liste todos os materiais com quantidade estimada e especificações técnicas (bitola do fio, amperagem do disjuntor, etc)');
-            if (optCheck) partes.push('2. CHECKLIST DE EXECUÇÃO: lista de verificação passo a passo para realizar o serviço corretamente');
-            if (optPreco) partes.push('3. PREÇO SUGERIDO: faixa de preço de mão de obra em Reais para o mercado brasileiro (formato: R$ XXX a R$ XXX), justificando o valor');
-            if (optNbr)   partes.push('4. DICAS TÉCNICAS NBR 5410: normas e boas práticas relevantes para este serviço');
-
-            if (partes.length === 0) { alert('Selecione ao menos uma opção.'); return; }
-
-            const prompt = `Você é um eletricista especialista brasileiro com 20 anos de experiência e conhecimento da NBR 5410.
-
-Serviço solicitado: "${servico}"
-
-Por favor, forneça em formato organizado:
-${partes.join('\n')}
-
-Seja prático, objetivo e use linguagem técnica adequada para eletricistas profissionais. Use emojis para facilitar a leitura.`;
-
-            const btn = document.getElementById('btn-ia');
-            const resultado = document.getElementById('ia-resultado');
-            const loading = document.getElementById('ia-loading');
-            const conteudo = document.getElementById('ia-conteudo');
-
-            btn.disabled = true;
-            btn.textContent = 'Consultando...';
-            resultado.classList.remove('hidden');
-            loading.classList.remove('hidden');
-            loading.style.display = 'flex';
-            conteudo.innerHTML = '';
-
-            try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': apiKey,
-                        'anthropic-version': '2023-06-01',
-                        'anthropic-dangerous-direct-browser-access': 'true'
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        messages: [{ role: 'user', content: prompt }]
-                    })
-                });
-
-                const data = await response.json();
-                const texto = data.content?.map(c => c.text || '').join('') || 'Sem resposta.';
-
-                loading.style.display = 'none';
-
-                // Renderizar resposta formatada por seções
-                const secoes = texto.split(/\n(?=\d\.|#{1,3})/);
-                secoes.forEach(secao => {
-                    if (!secao.trim()) return;
-                    const div = document.createElement('div');
-                    div.className = 'bg-white border border-slate-200 rounded-2xl overflow-hidden';
-
-                    // Detectar tipo de seção para cor
-                    const eh_mat   = /material|pecas|itens/i.test(secao);
-                    const eh_check = /checklist|passo|verific/i.test(secao);
-                    const eh_preco = /preço|valor|custo|R\$/i.test(secao);
-                    const eh_nbr   = /nbr|norma|dica|técnic/i.test(secao);
-                    const cor = eh_mat ? '#f97316' : eh_check ? '#22c55e' : eh_preco ? '#3b82f6' : eh_nbr ? '#8b5cf6' : '#64748b';
-
-                    div.innerHTML = `<div style="height:4px;background:${cor};"></div>`;
-
-                    const corpo = document.createElement('div');
-                    corpo.className = 'p-4';
-
-                    // Converter markdown simples em HTML legível
-                    const linhas = secao.trim().split('\n');
-                    linhas.forEach(linha => {
-                        if (!linha.trim()) return;
-                        const p = document.createElement('p');
-                        const limpа = linha.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^#+\s?/, '').replace(/^[-•]\s?/, '• ');
-                        if (/^(#{1,3}|\d+\.)/.test(linha.trim())) {
-                            p.className = 'text-xs font-black text-slate-800 uppercase mb-2 mt-1';
-                        } else if (linha.trim().startsWith('-') || linha.trim().startsWith('•')) {
-                            p.className = 'text-xs text-slate-600 mb-1 pl-2';
-                        } else {
-                            p.className = 'text-xs text-slate-600 mb-1';
-                        }
-                        p.innerHTML = limpа;
-                        corpo.appendChild(p);
-                    });
-
-                    div.appendChild(corpo);
-
-                    // Botão para adicionar checklist ao sistema
-                    if (eh_check) {
-                        const btnAdd = document.createElement('button');
-                        btnAdd.className = 'w-full py-2 text-xs font-bold text-green-600 hover:bg-green-50 transition-colors border-t border-slate-100';
-                        btnAdd.textContent = '+ Salvar como modelo de checklist';
-                        btnAdd.onclick = () => salvarChecklistIA(secao, servico);
-                        div.appendChild(btnAdd);
-                    }
-
-                    conteudo.appendChild(div);
-                });
-
-            } catch (err) {
-                loading.style.display = 'none';
-                conteudo.innerHTML = `<div class="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-600 font-medium">Erro ao consultar a IA. Verifique sua conexão e tente novamente.</div>`;
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '⚡ CONSULTAR IA';
-                btn.innerHTML = '⚡ CONSULTAR IA';
-            }
-        }
-
-        function salvarChecklistIA(texto, nomeServico) {
-            const itens = texto.split('\n')
-                .filter(l => l.trim().match(/^[-•✓✅☐□\d+\.]/))
-                .map(l => l.replace(/^[-•✓✅☐□\d+\.\s]+/, '').trim())
-                .filter(l => l.length > 3);
-
-            if (itens.length === 0) { alert('Não foi possível extrair itens do checklist.'); return; }
-
-            if (!state.modelosCheck) state.modelosCheck = [];
-            state.modelosCheck.push({ nome: nomeServico.substring(0, 50), itens });
-            saveState();
-            alert(`✅ Checklist salvo com ${itens.length} itens!\nAcesse em Ferramentas → Checklist.`);
-        }
 
         // — CARGA —
         // — CARGA ELÉTRICA —
@@ -3835,7 +3582,9 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
             }
         }
 
-        // ─────────────────────────────────────────────
+
+
+                // ─────────────────────────────────────────────
         // AGENDA & CLIENTES
         // ─────────────────────────────────────────────
         if (!state.visitas)  state.visitas  = [];
@@ -3845,9 +3594,10 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
             const m = document.getElementById('agendaModal');
             const c = document.getElementById('agendaContent');
             if (m.classList.contains('hidden')) {
+                lockScroll();
                 m.classList.remove('hidden');
-                document.body.classList.add('modal-open');
                 setTimeout(() => c.classList.remove('translate-y-full'), 10);
+                // setar mês/ano atual no relatório
                 const hoje = new Date();
                 document.getElementById('rel-mes').value = hoje.getMonth();
                 document.getElementById('rel-ano').value = hoje.getFullYear();
@@ -3856,8 +3606,7 @@ Seja prático, objetivo e use linguagem técnica adequada para eletricistas prof
                 renderGarantias();
             } else {
                 c.classList.add('translate-y-full');
-                document.body.classList.remove('modal-open');
-                setTimeout(() => m.classList.add('hidden'), 300);
+                setTimeout(() => { m.classList.add('hidden'); unlockScroll(); }, 300);
             }
         }
 
